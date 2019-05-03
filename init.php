@@ -26,7 +26,7 @@ if (!function_exists('config')) {
 	!defined('CONFIG_PATH') && define('CONFIG_PATH', ROOT . 'config/');
 	function config($key) {
 		static $configs = array();
-		list($key, $file) = explode('@', $key, 2);
+		@list($key, $file) = explode('@', $key, 2);
 		$file = empty($file) ? 'base' : $file;
 
 		$file_name = CONFIG_PATH . $file . '.php';
@@ -70,6 +70,14 @@ if (!function_exists('config')) {
 define('CACHE_PATH', ROOT.'cache/');
 cache::$type = empty( config('cache_type') )?'secache':config('cache_type');
 
+// token fix by xiumu
+function token($token = array()) {
+  if ($token) {
+    cache::set('token', serialize($token), 3600);
+  } else {
+    return cache::get('token');
+  }
+}
 
 if (!function_exists('db')) {
 	function db($table) {

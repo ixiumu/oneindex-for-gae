@@ -18,7 +18,8 @@ class one{
 		$refresh_token = config('refresh_token');
 		$token = onedrive::get_token($refresh_token);
 		if(!empty($token['refresh_token'])){
-			config('@token', $token);
+			//config('@token', $token);
+      token($token);
 		}
 	}
 

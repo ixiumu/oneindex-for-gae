@@ -50,15 +50,17 @@
 
 		//获取 $access_token, 带缓存
 		static function access_token(){
-			$token = config('@token');
-			if($token['expires_on'] > time()+600){
+			// $token = config('@token');
+      $token = token();
+			if(isset($token['expires_on']) && $token['expires_on'] > time()+600){
 				return $token['access_token'];
 			}else{
 				$refresh_token = config('refresh_token');
 				$token = self::get_token($refresh_token);
 				if(!empty($token['refresh_token'])){
 					$token['expires_on'] = time()+ $token['expires_in'];
-					config('@token', $token);
+					// config('@token', $token);
+          token($token);
 					return $token['access_token'];
 				}
 			}
