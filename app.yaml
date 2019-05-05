@@ -3,17 +3,10 @@ threadsafe: yes
 api_version: 1
 
 handlers:
-- url: /(.*\.(html|css|js))
+- url: /(.*\.(html|css|js|txt))
   static_files: \1
-  upload: .*\.(html|css|js)$
+  upload: .*\.(html|css|js|txt)$
   application_readable: true
 
 - url: .*
   script: index.php
-
-skip_files:
-- ^(.*/)?\.zip$
-- ^(.*/)?\.bat$
-- ^(.*/)?\.sh$
-- ^(.*/)?\.md$
-- ^vendor
