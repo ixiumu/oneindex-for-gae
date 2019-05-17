@@ -1,5 +1,7 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE);
+// ini_set('display_errors', true);
+// error_reporting(E_ALL);
 date_default_timezone_set('PRC');
 define('TIME', time());
 !defined('ROOT') && define('ROOT', str_replace("\\", "/", dirname(__FILE__)) . '/');
@@ -68,7 +70,12 @@ if (!function_exists('config')) {
 
 // cache
 define('CACHE_PATH', ROOT.'cache/');
-cache::$type = empty( config('cache_type') )?'secache':config('cache_type');
+// GAE 强制 memcached
+if (!isset($_SERVER['APPLICATION_ID'])){
+	cache::$type = empty( config('cache_type') )?'secache':config('cache_type');
+}else{
+	cache::$type = 'memcache';
+}
 
 // token fix by xiumu
 function token($token = array()) {

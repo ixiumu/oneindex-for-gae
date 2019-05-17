@@ -60,6 +60,9 @@ class IndexController{
 		if(!empty($_POST['password']) && strcmp($password, $_POST['password']) === 0){
 			setcookie(md5($this->path), $_POST['password']);
 			return true;
+		}elseif(!empty($_SERVER['HTTP_AUTHORIZATION']) && strcmp('Basic ' . base64_encode(':'.$password), $_SERVER['HTTP_AUTHORIZATION']) === 0){ // 支持HTTP授权方式
+			setcookie(md5($this->path), $_POST['password']);
+			return true;
 		}
 		$navs = $this->navs();
 		echo view::load('password')->with('navs',$navs);
@@ -192,7 +195,7 @@ class IndexController{
 		return $content;
 	}
 
-	//时候404
+	//是否404
 	function is404(){
 		if(!empty($this->items[$this->name]) || (empty($this->name) && is_array($this->items)) ){
 			return false;

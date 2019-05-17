@@ -131,7 +131,7 @@ class route {
 		$path = dirname($_SERVER['PHP_SELF']);
 		$req_uri = $_SERVER['REQUEST_URI'];
 
-		if ($path != '/' && strpos($req_uri, $path) === 0) {
+		if ($path && $path != '/' && strpos($req_uri, $path) === 0) {
 			$req_uri = substr($req_uri, strlen($path));
 		}
 
