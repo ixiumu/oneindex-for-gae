@@ -11,3 +11,5 @@ Onedrive Directory Index
 gcloud config set project <project_id>
 gcloud app deploy
 ```
+
+原项目 https://github.com/donwa/oneindex
