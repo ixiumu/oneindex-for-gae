@@ -29,14 +29,14 @@ class AdminController{
 	function login(){
 		if(!empty($_POST['password']) && $_POST['password'] == config('password')){
 			setcookie('admin', md5(config('password').config('refresh_token')) );
-			return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).'?/admin/');
+			return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME']).config('root_path')).'admin/');
 		}
 		return view::load('login')->with('title', '系统管理');
 	}
 
 	function logout(){
 		setcookie('admin', '' );
-		return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).'?/login');
+		return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME']).config('root_path')).'login');
 	}
 
 	function settings(){
@@ -203,7 +203,7 @@ class AdminController{
 		if(!empty($data['refresh_token'])){
 			config('refresh_token',$data['refresh_token']);
 			// config('@token', $data);
-      token($token);
+			token($token);
 		}
 		return view::load('install/install_3')->with('refresh_token',$data['refresh_token']);
 		

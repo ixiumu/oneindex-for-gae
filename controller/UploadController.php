@@ -102,7 +102,7 @@ class UploadController{
 		$request['headers'] .= "Host: ".$_SERVER['HTTP_HOST'];
 		$request['curl_opt']=[CURLOPT_CONNECTTIMEOUT => 1,CURLOPT_TIMEOUT=>1,CURLOPT_FOLLOWLOCATION=>true];
 		$http_type = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
-		$request['url'] = $http_type.'127.0.0.1'.get_absolute_path(dirname($_SERVER['PHP_SELF'])).'?/admin/upload/task';
+		$request['url'] = $http_type.'127.0.0.1'.get_absolute_path(dirname($_SERVER['PHP_SELF']).config('root_path')).'admin/upload/task';
 		$request['post_data'] = 'remotepath='.urlencode($remotepath);
 		return $request;
 	}

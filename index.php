@@ -38,7 +38,7 @@ route::any('/login','AdminController@login');
 
 //跳转到登陆
 route::any('/admin/',function(){
-	return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).'?/login');
+	return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME']).config('root_path')).'login');
 });
 
 

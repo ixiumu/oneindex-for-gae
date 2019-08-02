@@ -70,11 +70,11 @@ if (!function_exists('config')) {
 
 // cache
 define('CACHE_PATH', ROOT.'cache/');
-// GAE 强制 memcached
-if (!isset($_SERVER['APPLICATION_ID'])){
+// GAE 强制 firestore
+if (!isset($_SERVER['GAE_RUNTIME'])){
 	cache::$type = empty( config('cache_type') )?'secache':config('cache_type');
 }else{
-	cache::$type = 'memcache';
+	cache::$type = 'firestore';
 }
 
 // token fix by xiumu

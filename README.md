@@ -5,11 +5,12 @@ Onedrive Directory Index
 
 在localhost下完成授权
 
+新建 Firestore 集合 `oneindex`
+
 部署
 
 ```
-gcloud config set project <project_id>
-gcloud app deploy
+gcloud app deploy --project=<project_id> --version=31
 ```
 
 原项目 https://github.com/donwa/oneindex

@@ -3,9 +3,9 @@ threadsafe: yes
 api_version: 1
 
 handlers:
-- url: /(.*\.(html|css|js|txt))
+- url: /(.*\.(html|css|js|ico|txt))
   static_files: \1
-  upload: .*\.(html|css|js|txt)$
+  upload: .*\.(html|css|js|ico|txt)$
   application_readable: true
 
 - url: .*
