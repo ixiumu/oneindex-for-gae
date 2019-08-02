@@ -2,22 +2,22 @@
 use Google\Cloud\Firestore\FirestoreClient;
 
 class firestore_{
-	private $m;
+	private $db;
 	
 	function __construct($config = null){
 		$db = new FirestoreClient();
-		$this->m = $db->collection('oneindex');
+		$this->db = $db->collection('oneindex');
 	}
 
 	function get($key){
 		$key = urlencode($key);
 
-		$docRef = $this->m->document($key);
+		$docRef = $this->db->document($key);
 		$snapshot = $docRef->snapshot();
 		if ($snapshot->exists()) {
 			$data = $snapshot->data();
 			if( is_array($data) && $data['expire'] > time() && !is_null($data['data']) ){
-				return $data['data'];
+				return unserialize($data['data']);
 			}
 		}
 		return null;
@@ -27,11 +27,17 @@ class firestore_{
 		$key = urlencode($key);
 
 		$data['expire'] = time() + $expire;
-		$data['data'] = $value;
-		return $this->m->document($key)->set($data);
+		$data['data'] = serialize($value);
+		return $this->db->document($key)->set($data);
 	}
 
 	function clear(){
-		$this->m->flush(10);
+		$docs = $this->db->limit(10)->documents();
+		while (!$docs->isEmpty()) {
+			foreach ($docs as $doc) {
+				$doc->reference()->delete();
+			}
+			$docs = $this->db->limit(10)->documents();
+		}
 	}
 }

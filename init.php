@@ -80,7 +80,7 @@ if (!isset($_SERVER['GAE_RUNTIME'])){
 // token fix by xiumu
 function token($token = array()) {
   if ($token) {
-    cache::set('token', serialize($token), 3600);
+    cache::set('token', $token, 3600);
   } else {
     return cache::get('token');
   }
